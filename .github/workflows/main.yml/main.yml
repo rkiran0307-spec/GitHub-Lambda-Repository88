@@ -1,4 +1,4 @@
-name: Deploy
+name: Deploy to Lambda
 
 on:
   push:
@@ -13,8 +13,28 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '12'
-      - name: npm install
+      - name: npm install and build
         eny:
           CI: true
         run:
            npm ci
+           npm run build --if-present
+      - name: AWS Lambda Deploy Function
+  # You may pin to the exact commit or the version.
+  # uses: zeagord/aws-lambda-deploy-function@63409e95ba826bc89e9c7ca35e4bf3922bf00090
+  uses: zeagord/aws-lambda-deploy-function@0.0.3
+  with:
+    # Jar or Zip package of the lambda
+    artifact: # optional, default is 
+    # Name of the Lambda function
+    function-name: # optional, default is 
+    # Runtime fo the Lambda, Java11 or Node11
+    runtime: # optional, default is 
+    # Name of the Handler
+    handler: # optional, default is 
+    # AWS secret key
+    AWS_SECRET_KEY: # optional, default is 
+    # AWS secret key ID
+    AWS_SECRET_ID: # optional, default is 
+    # AWS region
+    AWS_REGION: # optional, default is 
