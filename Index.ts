@@ -1,10 +1,12 @@
-import {APIGatewayProxyEvent, APIGatewayProxyResultV2, Handler  } from 'aws-lambda';
-
-export const handler: Handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResultV2> => {
-const response = {
-    statusCode: 200,
-    body: JSON.stringify('Hello from Lambda! 12344'),
-};
-return response;
-};
+exports.handler = async (event) => {
+   
+   //const secret1 = '[first secret]';
+   //const secret2 = '[second secret]';
+   //const secret1 = process.env.FIRST_SECRET; 
+   //const secret2 = process.env.SECOND_SECRET;
+   const secret1 = await decryptSecret('FIRST_SECRET'); 
+   const secret2 = await decryptSecret('SECOND_SECRET');;
     
+   return `ssshhh! The secrets are: secret1: '${secret1}' secret2: '${secret2}'`;
+    
+};
